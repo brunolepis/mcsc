@@ -5,7 +5,6 @@ function ServerType() {
   const [search, setSearch] = useSearchParams();
 
   const proceed = (serverType) => {
-    /* if (!search.question) */
     search.set("question", "server_version");
     search.set("type", serverType);
     setSearch(search);

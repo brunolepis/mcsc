@@ -44,7 +44,6 @@ function Sidebar() {
                 className="text-offwhite text-opacity-80 hover:cursor-not-allowed text-xl"
                 title="Coming Soon"
                 disabled
-                /* onClick={() => mcscLocation()} */
               >
                 Update
               </button>
