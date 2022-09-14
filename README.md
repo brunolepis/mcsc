@@ -21,3 +21,11 @@ Mcsc is a tool that makes installing and configuring your Minecraft server easie
 ## Get Started
 
 Download the latest release from the <a href="https://github.com/brunolepis/mcsc/releases" target="_blank">releases</a> tab.
+
+| File extension| OS        |
+| :---:         | :---:     |
+| *.tar.gz      | MacOS     |
+| *.dmg         | MacOS     |
+| *.deb         | Debian    |
+| *.AppImage    | Debian    |
+| *.msi         | Windows   |
