@@ -1,8 +1,10 @@
 # mcsc
+
 An easy to use Minecraft server creator.
 
 ## Introduction
-Mcsc is a tool that makes installing and configuring your Minecraft server easier than ever before. Using Tauri with a React frontend makes it run blazingly fast.
+
+Mcsc is a tool that makes installing and configuring your Minecraft server easier than ever before. Using <a href="https://tauri.app/" target="_blank">Tauri</a> with a <a href="https://reactjs.org/" target="_blank">React</a> frontend and <a href="https://tailwindcss.com/" target="_blank">Tailwind</a> makes it run blazingly fast.
 
 ## Features
 
