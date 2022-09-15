@@ -17,6 +17,7 @@ Mcsc is a tool that makes installing and configuring your Minecraft server easie
 - [ ] Server config file editor
 - [ ] Auto updater
 - [ ] Server plugin manager and installer
+- [ ] Port Forwarding
 
 ## Get Started
 
