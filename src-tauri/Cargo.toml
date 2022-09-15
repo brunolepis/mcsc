@@ -1,11 +1,11 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-default-run = "app"
+name = "mcsc"
+version = "1.0.3"
+description = "An easy to use Minecraft server creator."
+authors = ["Bruno Lepis <https://brunolepis.xyz>"]
+license = "MIT"
+repository = "https://github.com/brunolepis/mcsc"
+# default-run = "app"
 edition = "2021"
 rust-version = "1.57"
 
@@ -19,6 +19,9 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.5", features = ["api-all"] }
 reqwest = { version="0.11.11", features = ["blocking", "json"] }
+# fix ubuntu 22.04 compatibility issues (soon)
+# openssl = { version = "0.10", features = ["vendored"] }
+# openssl-sys = { version = "0.9", features = ["vendored"] }
 
 [features]
 # by default Tauri runs in production mode
