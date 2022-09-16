@@ -71,12 +71,10 @@ function ServerVersion() {
               }
             );
           } else {
-            const vanilla = serverTypes.find((x) => x.type === "Vanilla");
-            const versionIndex = vanilla.versions.findIndex(
-              (x) => x === version
-            );
+            const type = serverTypes.find((x) => x.type === search.get("type"));
+            const versionIndex = type.versions.findIndex((x) => x === version);
 
-            const url = vanilla.downloads[versionIndex];
+            const url = type.downloads[versionIndex];
 
             const userDir = await homeDir();
 
@@ -85,12 +83,12 @@ function ServerVersion() {
             ).then(async (accepted) => {
               if (!accepted) throw Error("EULA wasn't accepted.");
               else {
-                createDirectory(`mcsc/Vanilla/${version}`);
+                createDirectory(`mcsc/${search.get("type")}/${version}`);
                 return await invoke("write_file", {
                   filePath: await join(
                     userDir,
                     "mcsc",
-                    "Vanilla",
+                    search.get("type"),
                     version,
                     "eula.txt"
                   ),
@@ -103,7 +101,7 @@ function ServerVersion() {
             const filePath = await join(
               userDir,
               "mcsc",
-              "Vanilla",
+              search.get("type"),
               version,
               fileName
             );

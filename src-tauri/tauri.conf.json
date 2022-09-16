@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "mcsc",
-    "version": "1.0.3"
+    "version": "1.1.0"
   },
   "tauri": {
     "allowlist": {
@@ -18,7 +18,9 @@
           "https://api.papermc.io/v2/projects/paper/versions/*",
           "https://launcher.mojang.com/mc/game/*",
           "https://launcher.mojang.com/v1/objects/*",
-          "https://piston-data.mojang.com/v1/objects/*"
+          "https://piston-data.mojang.com/v1/objects/*",
+          "https://download.getbukkit.org/spigot/*",
+          "https://cdn.getbukkit.org/spigot/*"
         ]
       },
       "fs": {

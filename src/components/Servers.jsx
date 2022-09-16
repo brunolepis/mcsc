@@ -9,7 +9,11 @@ import Header from "./Header";
 
 function Servers() {
   const [search, setSearch] = useSearchParams();
-  const [servers, setServers] = useState([]);
+  const [servers, setServers] = useState([
+    { type: "Paper", versions: [] },
+    { type: "Spigot", versions: [] },
+    { type: "Vanilla", versions: [] },
+  ]);
   const [modal, setModal] = useState({
     show: false,
     version: null,
@@ -21,7 +25,14 @@ function Servers() {
       const mainDir = await readDirectory("mcsc");
       mainDir.map(async (type) => {
         const versions = await readDirectory(`mcsc/${type}/`);
-        return setServers((prev) => [...prev, { type, versions }]);
+        setServers((curr) => curr.filter((x) => x.type !== type));
+        return setServers((prev) => [
+          ...prev,
+          {
+            type,
+            versions,
+          },
+        ]);
       });
     };
     func();
@@ -33,7 +44,7 @@ function Servers() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen">
       <div
         className={`h-screen w-full absolute top-0 transition-all ease-out duration-300 justify-center items-center ${
           modal.show ? "flex" : "hidden"
@@ -82,73 +93,49 @@ function Servers() {
       <Header />
       <div className="flex flex-col space-y-7 w-full justify-center items-center my-16">
         <div className="flex flex-col space-y-5 items-start">
-          <h1 className="text-offwhite text-xl px-2">Paper</h1>
-          <div className="flex flex-col space-y-4">
-            <div className="w-56 flex flex-col items-start space-y-4">
-              {servers.find((x) => x.type === "Paper") ? (
-                servers
-                  .find((x) => x.type === "Paper")
-                  ?.versions?.reverse()
-                  ?.map((version, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex bg-gray bg-opacity-20 w-full px-6 py-2 rounded-lg justify-between"
-                      >
-                        <h1 className="text-offwhite">{version}</h1>
-                        <button
-                          onClick={() => {
-                            setModal({ show: true, version, type: "Paper" });
-                          }}
-                          className="active:scale-95"
-                        >
-                          <Cog6ToothIcon className="h-5 w-5 text-primary" />
-                        </button>
-                      </div>
-                    );
-                  })
-              ) : (
-                <p className="text-offwhite text-opacity-80 px-3">
-                  No servers installed
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col space-y-5 items-start">
-          <h1 className="text-offwhite text-xl px-2">Vanilla</h1>
-          <div className="flex flex-col space-y-4">
-            <div className="w-56 flex flex-col items-start space-y-4">
-              {servers.find((x) => x.type === "Vanilla") ? (
-                servers
-                  .find((x) => x.type === "Vanilla")
-                  ?.versions?.reverse()
-                  ?.map((version, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex bg-gray bg-opacity-20 w-full px-6 py-2 rounded-lg justify-between"
-                      >
-                        <h1 className="text-offwhite">
-                          {search.get("type")} {version}
-                        </h1>
-                        <button
-                          onClick={() => {
-                            setModal({ show: true, version, type: "Vanilla" });
-                          }}
-                        >
-                          <Cog6ToothIcon className="h-5 w-5 text-primary" />
-                        </button>
-                      </div>
-                    );
-                  })
-              ) : (
-                <p className="text-offwhite text-opacity-80 px-3">
-                  No servers installed
-                </p>
-              )}
-            </div>
-          </div>
+          {servers
+            .sort((a, b) => {
+              return a.type.length - b.type.length;
+            })
+            .map((server, i) => {
+              return (
+                <div key={i} className="flex flex-col space-y-5 items-start">
+                  <h1 className="text-offwhite text-xl px-2">{server.type}</h1>
+                  <div className="flex flex-col space-y-4">
+                    <div className="w-56 flex flex-col items-start space-y-4">
+                      {server.versions.length !== 0 ? (
+                        server.versions?.reverse()?.map((version, index) => {
+                          return (
+                            <div
+                              key={index}
+                              className="flex bg-gray bg-opacity-20 w-full px-6 py-2 rounded-lg justify-between"
+                            >
+                              <h1 className="text-offwhite">{version}</h1>
+                              <button
+                                onClick={() => {
+                                  setModal({
+                                    show: true,
+                                    version,
+                                    type: server.type,
+                                  });
+                                }}
+                                className="active:scale-95"
+                              >
+                                <Cog6ToothIcon className="h-5 w-5 text-primary" />
+                              </button>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <p className="text-offwhite text-opacity-80 px-3">
+                          No servers installed
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
         <span className="w-3/5 h-px bg-offwhite bg-opacity-20"></span>
         <button

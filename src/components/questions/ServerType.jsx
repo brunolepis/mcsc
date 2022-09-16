@@ -26,6 +26,14 @@ function ServerType() {
         </button>
         <button
           onClick={() => {
+            proceed("Spigot");
+          }}
+          className="w-56 py-2 rounded-md bg-primary bg-opacity-20 hover:bg-opacity-100 active:scale-95 text-primary hover:text-secondary"
+        >
+          Spigot
+        </button>
+        <button
+          onClick={() => {
             proceed("Vanilla");
           }}
           className="w-56 py-2 rounded-md bg-primary bg-opacity-20 hover:bg-opacity-100 active:scale-95 text-primary hover:text-secondary"

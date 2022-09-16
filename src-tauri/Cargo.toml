@@ -1,6 +1,6 @@
 [package]
 name = "mcsc"
-version = "1.0.3"
+version = "1.1.0"
 description = "An easy to use Minecraft server creator."
 authors = ["Bruno Lepis <https://brunolepis.xyz>"]
 license = "MIT"
