@@ -20,7 +20,8 @@
           "https://launcher.mojang.com/v1/objects/*",
           "https://piston-data.mojang.com/v1/objects/*",
           "https://download.getbukkit.org/spigot/*",
-          "https://cdn.getbukkit.org/spigot/*"
+          "https://cdn.getbukkit.org/spigot/*",
+          "https://ci.md-5.net/*"
         ]
       },
       "fs": {

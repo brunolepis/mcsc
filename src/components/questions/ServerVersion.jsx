@@ -16,13 +16,13 @@ function ServerVersion() {
     await ask(`Would you like to download and install ${version}?`).then(
       async (yes) => {
         if (yes) {
-          if (search.get("type") === "Paper") {
-            const paper = serverTypes.find((x) => x.type === "Paper");
+          const type = serverTypes.find((x) => x.type === search.get("type"));
 
+          if (search.get("type") === "Paper") {
             const response = await fetch(
-              paper.api.versions.replace(
+              type.api.versions.replace(
                 /VERSION/,
-                version ? version : getHighestValue(paper.versions)
+                version ? version : getHighestValue(type.versions)
               ),
               {
                 method: "GET",
@@ -31,7 +31,7 @@ function ServerVersion() {
             );
             const build = getHighestValue(response.data.builds);
 
-            const url = paper.api.download
+            const url = type.api.download
               .replaceAll(/VERSION/g, version)
               .replaceAll(/BUILD/g, build);
 
@@ -71,7 +71,6 @@ function ServerVersion() {
               }
             );
           } else {
-            const type = serverTypes.find((x) => x.type === search.get("type"));
             const versionIndex = type.versions.findIndex((x) => x === version);
 
             const url = type.downloads[versionIndex];

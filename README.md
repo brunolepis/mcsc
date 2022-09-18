@@ -26,7 +26,7 @@ Download the latest release from the <a href="https://github.com/brunolepis/mcsc
 | File extension |   OS    | Working? |
 | :------------: | :-----: | :------: |
 |     \*.msi     | Windows |    ✅    |
-|     \*.deb     | Debian  |    ❔    |
-|  \*.AppImage   | Debian  |    ❔    |
+|     \*.deb     | Debian  |    ❌    |
+|  \*.AppImage   | Debian  |    ❌    |
 |   \*.tar.gz    |  MacOS  |    ❔    |
 |     \*.dmg     |  MacOS  |    ❔    |

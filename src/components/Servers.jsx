@@ -128,7 +128,7 @@ function Servers() {
                         })
                       ) : (
                         <p className="text-offwhite text-opacity-80 px-3">
-                          No servers installed
+                          No server installed
                         </p>
                       )}
                     </div>
