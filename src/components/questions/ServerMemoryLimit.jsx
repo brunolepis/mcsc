@@ -1,6 +1,7 @@
 import React from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { homeDir, join } from "@tauri-apps/api/path";
+import { type } from "@tauri-apps/api/os";
 
 import { startBat } from "../../util/constants";
 import { useSearchParams } from "react-router-dom";
@@ -41,14 +42,21 @@ function ServerMemoryLimit() {
         <button
           onClick={async (e) => {
             const userDir = await homeDir();
-
+            const osType = await type();
+            
             await invoke("write_file", {
               filePath: await join(
                 userDir,
                 "mcsc",
                 search.get("type"),
                 search.get("version"),
-                "start.bat"
+                osType === "Windows_NT"
+                  ? "start.bat"
+                  : osType === "Linux"
+                  ? "start.sh"
+                  : osType === "Darwin"
+                  ? "start.command"
+                  : osType
               ),
               fileContent: startBat
                 .replace(/MIN/, search.get("min_ram") || 4000)

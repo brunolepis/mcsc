@@ -8,12 +8,13 @@
   },
   "package": {
     "productName": "mcsc",
-    "version": "1.1.0"
+    "version": "1.1.1"
   },
   "tauri": {
     "allowlist": {
-      "all": true,
       "http": {
+        "all": true,
+        "request": true,
         "scope": [
           "https://api.papermc.io/v2/projects/paper/versions/*",
           "https://launcher.mojang.com/mc/game/*",
@@ -32,7 +33,16 @@
         "removeDir": true,
         "scope": ["$HOME/*"]
       },
+      "dialog": {
+        "all": true
+      },
+      "path": {
+        "all": true
+      },
       "shell": {
+        "all": true
+      },
+      "os": {
         "all": true
       }
     },
