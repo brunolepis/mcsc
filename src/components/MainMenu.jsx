@@ -9,7 +9,6 @@ function MainMenu() {
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
-    
     if (!search.get("window") || search.get("window") === "undefined") {
       search.set("window", "main_menu");
       return setSearch(search);
