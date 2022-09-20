@@ -19,6 +19,7 @@ function Header() {
           window.location.href = "/";
         }}
         className="text-primary text-4xl font-semibold"
+        title="Minecraft Server Creator"
       >
         MCSC
       </button>
