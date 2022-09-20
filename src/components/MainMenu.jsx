@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { exit } from '@tauri-apps/api/process';
 
 import { useSearchParams } from "react-router-dom";
 import Header from "./Header";
@@ -40,12 +39,13 @@ function MainMenu() {
           Servers
         </button>
         <button
-          onClick={async () => {
-            await exit(0);
+          onClick={() => {
+            search.set("window", "settings");
+            setSearch(search);
           }}
           className="w-56 py-2 rounded-md bg-primary bg-opacity-20 hover:bg-opacity-100 active:scale-95 text-primary hover:text-secondary"
         >
-          Exit
+          Settings
         </button>
       </div>
     </div>

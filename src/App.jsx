@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import Install from "./components/Install";
 import MainMenu from "./components/MainMenu";
 import Servers from "./components/Servers";
+import Settings from "./components/Settings";
 
 function App() {
   const [search, setSearch] = useSearchParams();
@@ -34,6 +35,9 @@ function App() {
     }
     case "servers": {
       return <Servers />;
+    }
+    case "settings": {
+      return <Settings />;
     }
     default: {
       return <MainMenu />;
