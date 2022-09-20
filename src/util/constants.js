@@ -182,5 +182,5 @@ text-filtering-config=
 use-native-transport=true
 `;
 
-export const startBat = `@echo off
+export const starter = `@echo off
 java -XmxMINM -XmsMAXM -jar VERSION.jar nogui`;
