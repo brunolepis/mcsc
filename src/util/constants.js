@@ -183,4 +183,4 @@ use-native-transport=true
 `;
 
 export const starter = `@echo off
-java -XmxMINM -XmsMAXM -jar VERSION.jar nogui`;
+java -Xmx%MAX%M -Xms%MIN%M -jar %VERSION%.jar nogui`;
