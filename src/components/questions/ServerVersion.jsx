@@ -7,115 +7,127 @@ import { useSearchParams } from "react-router-dom";
 
 import { eula, serverTypes } from "../../util/constants";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
-import { getHighestValue, createDirectory } from "../../util/functions";
+import {
+  getHighestValue,
+  createDirectory,
+  pathExists,
+} from "../../util/functions";
 
 function ServerVersion() {
   const [search, setSearch] = useSearchParams();
 
   const download = async (version) => {
-    await ask(`Would you like to download and install ${version}?`).then(
-      async (yes) => {
-        if (yes) {
-          const type = serverTypes.find((x) => x.type === search.get("type"));
+    let str = `Would you like to download and install ${version}?`;
+    if (await pathExists(`mcsc/Paper/${version}/${version}.jar`))
+      str = `${version}.jar is already installed. Would you like to install it again?`;
 
-          if (search.get("type") === "Paper") {
-            const response = await fetch(
-              type.api.versions.replace(
-                /VERSION/,
-                version ? version : getHighestValue(type.versions)
-              ),
-              {
-                method: "GET",
-                timeout: 5,
-              }
-            );
-            const build = getHighestValue(response.data.builds);
+    await ask(str).then(async (yes) => {
+      if (yes) {
+        const type = serverTypes.find((x) => x.type === search.get("type"));
 
-            const url = type.api.download
-              .replaceAll(/VERSION/g, version)
-              .replaceAll(/BUILD/g, build);
+        if (search.get("type") === "Paper") {
+          const response = await fetch(
+            type.api.versions.replace(
+              /VERSION/,
+              version ? version : getHighestValue(type.versions)
+            ),
+            {
+              method: "GET",
+              timeout: 5,
+            }
+          );
+          const build = getHighestValue(response.data.builds);
 
-            const userDir = await homeDir();
+          const url = type.api.download
+            .replaceAll(/VERSION/g, version)
+            .replaceAll(/BUILD/g, build);
 
-            await ask(
-              "Do you accept the EULA?\nhttps://www.minecraft.net/en-us/eula"
-            ).then(async (accepted) => {
-              if (!accepted) throw Error("EULA wasn't accepted.");
-              else {
+          const userDir = await homeDir();
+
+          await ask(
+            "Do you accept the EULA?\nhttps://www.minecraft.net/en-us/eula"
+          ).then(async (accepted) => {
+            if (!accepted) throw Error("EULA wasn't accepted.");
+            else {
+              if (!(await pathExists(`mcsc/Paper`))) {
                 createDirectory(`mcsc/Paper/${version}`);
-                return await invoke("write_file", {
-                  filePath: await join(
-                    userDir,
-                    "mcsc",
-                    "Paper",
-                    version,
-                    "eula.txt"
-                  ),
-                  fileContent: eula,
-                });
               }
-            });
+              return await invoke("write_file", {
+                filePath: await join(
+                  userDir,
+                  "mcsc",
+                  "Paper",
+                  version,
+                  "eula.txt"
+                ),
+                fileContent: eula,
+              });
+            }
+          });
 
-            const fileName = `${version}.jar`;
-            const filePath = await join(
-              userDir,
-              "mcsc",
-              "Paper",
-              version,
-              fileName
-            );
+          const fileName = `${version}.jar`;
+          const filePath = await join(
+            userDir,
+            "mcsc",
+            "Paper",
+            version,
+            fileName
+          );
 
-            return await invoke("download_file", { filePath, url }).then(
-              async (msg) => {
-                return await message(`${msg} ${fileName}.`);
-              }
-            );
-          } else {
-            const versionIndex = type.versions.findIndex((x) => x === version);
-
-            const url = type.downloads[versionIndex];
-
-            const userDir = await homeDir();
-
-            await ask(
-              "Do you accept the EULA?\nhttps://www.minecraft.net/en-us/eula"
-            ).then(async (accepted) => {
-              if (!accepted) throw Error("EULA wasn't accepted.");
-              else {
-                createDirectory(`mcsc/${search.get("type")}/${version}`);
-                return await invoke("write_file", {
-                  filePath: await join(
-                    userDir,
-                    "mcsc",
-                    search.get("type"),
-                    version,
-                    "eula.txt"
-                  ),
-                  fileContent: eula,
-                });
-              }
-            });
-
-            const fileName = `${version}.jar`;
-            const filePath = await join(
-              userDir,
-              "mcsc",
-              search.get("type"),
-              version,
-              fileName
-            );
-
-            return await invoke("download_file", { filePath, url }).then(
-              async (msg) => {
-                return await message(`${msg} ${fileName}.`);
-              }
-            );
-          }
+          return await invoke("download_file", { filePath, url }).then(
+            async (msg) => {
+              return await message(`${msg} ${fileName}.`);
+            }
+          );
         } else {
-          throw Error("Cancelled version selection.");
+          const versionIndex = type.versions.findIndex((x) => x === version);
+
+          const url = type.downloads[versionIndex];
+
+          const userDir = await homeDir();
+
+          await ask(
+            "Do you accept the EULA?\nhttps://www.minecraft.net/en-us/eula"
+          ).then(async (accepted) => {
+            if (!accepted) throw Error("EULA wasn't accepted.");
+            else {
+              if (
+                !(await pathExists(`mcsc/${search.get("type")}/${version}`))
+              ) {
+                createDirectory(`mcsc/${search.get("type")}/${version}`);
+              }
+              return await invoke("write_file", {
+                filePath: await join(
+                  userDir,
+                  "mcsc",
+                  search.get("type"),
+                  version,
+                  "eula.txt"
+                ),
+                fileContent: eula,
+              });
+            }
+          });
+
+          const fileName = `${version}.jar`;
+          const filePath = await join(
+            userDir,
+            "mcsc",
+            search.get("type"),
+            version,
+            fileName
+          );
+
+          return await invoke("download_file", { filePath, url }).then(
+            async (msg) => {
+              return await message(`${msg} ${fileName}.`);
+            }
+          );
         }
+      } else {
+        return console.error("Cancelled version selection.");
       }
-    );
+    });
   };
 
   return (

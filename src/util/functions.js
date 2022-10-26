@@ -4,7 +4,12 @@ import {
   BaseDirectory,
   readDir,
   removeDir,
+  exists,
 } from "@tauri-apps/api/fs";
+
+export const pathExists = async (path) => {
+  return await exists(path, { dir: BaseDirectory.Home });
+};
 
 export const readDirectory = async (path) => {
   const entries = await readDir(path, {

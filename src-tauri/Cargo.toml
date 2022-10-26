@@ -1,6 +1,6 @@
 [package]
 name = "mcsc"
-version = "1.1.2"
+version = "1.1.3"
 description = "An easy to use Minecraft server creator."
 authors = ["Bruno Lepis <https://brunolepis.xyz>"]
 license = "MIT"
@@ -10,27 +10,18 @@ edition = "2021"
 rust-version = "1.57"
 
 [build-dependencies]
-tauri-build = { version = "1.0.4", features = [] }
+tauri-build = { version = "1.1.1", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.0.5", features = [
-  "dialog-all",
-  "fs-copy-file",
-  "fs-create-dir",
-  "fs-read-dir",
-  "fs-remove-dir",
-  "fs-write-file",
-  "http-all",
-  "os-all",
-  "path-all",
-  "shell-all",
+tauri = { version = "1.1.1", features = ["dialog-all", "fs-copy-file", "fs-create-dir", "fs-exists", "fs-read-dir", "fs-remove-dir", "fs-write-file", "http-all", "os-all", "path-all", "shell-all"] }
+reqwest = { version = "0.11.12", features = [
+  "blocking",
+  "json",
+  "rustls-tls",
+  "brotli",
 ] }
-reqwest = { version = "0.11.11", features = ["blocking", "json"] }
-# fix ubuntu 22.04 compatibility issues (soon)
-# openssl = { version = "0.10", features = ["vendored"] }
-# openssl-sys = { version = "0.9", features = ["vendored"] }
 
 [features]
 default = ["custom-protocol"]

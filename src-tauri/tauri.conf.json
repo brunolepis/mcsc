@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "mcsc",
-    "version": "1.1.2"
+    "version": "1.1.3"
   },
   "tauri": {
     "allowlist": {
@@ -31,6 +31,7 @@
         "copyFile": true,
         "createDir": true,
         "removeDir": true,
+        "exists": true,
         "scope": ["$HOME/*"]
       },
       "dialog": {
@@ -57,7 +58,9 @@
           "libwebkit2gtk-4.0-dev",
           "libappindicator3-dev",
           "librsvg2-dev",
-          "patchelf"
+          "patchelf",
+          "libssl-dev",
+          "pkg-config"
         ]
       },
       "externalBin": [],

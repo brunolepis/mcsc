@@ -7,12 +7,10 @@ use std::io;
 use std::{fs::File, io::Write};
 
 #[tauri::command]
-fn download_file(file_path: String, url: String) -> Result<String, ()> {
-    let resp = reqwest::blocking::get(url).expect("request failed");
-    let body = resp.bytes().expect("body invalid");
+fn download_file(file_path: &str, url: &str) -> Result<String, ()> {
+    let mut resp = reqwest::blocking::get(url).expect("request failed");
     let mut out = File::create(file_path).expect("failed to create file");
-    let body_bytes = body.to_vec();
-    io::copy(&mut &body_bytes[..], &mut out).expect("failed to copy content");
+    io::copy(&mut resp, &mut out).expect("failed to copy content");
     Ok("Successfully downloaded".to_string())
 }
 
